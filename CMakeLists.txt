@@ -112,8 +112,10 @@ set_target_properties(
   INTERFACE_INCLUDE_DIRECTORIES ${GMP_INCLUDE_DIR}
 )
 
-find_package(OpenSSL REQUIRED)
-INCLUDE_DIRECTORIES(${OPENSSL_INCLUDE_DIR})
+if ("${IS_LIBFF_PARENT}")
+  find_package(OpenSSL REQUIRED)
+  INCLUDE_DIRECTORIES(${OPENSSL_INCLUDE_DIR})
+endif()
 
 if("${WITH_PROCPS}")
   include(FindPkgConfig)
