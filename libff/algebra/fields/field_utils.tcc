@@ -10,8 +10,8 @@
 #ifndef FIELD_UTILS_TCC_
 #define FIELD_UTILS_TCC_
 
+#include <cassert>
 #include <complex>
-#include <stdexcept>
 
 #include <libff/common/double.hpp>
 #include <libff/common/utils.hpp>
@@ -38,8 +38,8 @@ typename std::enable_if<!std::is_same<FieldT, Double>::value, FieldT>::type
 get_root_of_unity(const size_t n)
 {
     const size_t logn = log2(n);
-    if (n != (1u << logn)) throw std::invalid_argument("libff::get_root_of_unity: expected n == (1u << logn)");
-    if (logn > FieldT::s) throw std::invalid_argument("libff::get_root_of_unity: expected logn <= FieldT::s");
+    assert(n == (1u << logn));
+    assert(logn <= FieldT::s);
 
     FieldT omega = FieldT::root_of_unity;
     for (size_t i = FieldT::s; i > logn; --i)
