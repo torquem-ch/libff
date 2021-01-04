@@ -64,6 +64,10 @@ target_include_directories(
   PUBLIC ..
 )
 
+if(NOT MSVC)
+  target_compile_options(ff PRIVATE -fno-exceptions)
+endif()
+
 install(
   DIRECTORY "" DESTINATION "include/libff"
   FILES_MATCHING
