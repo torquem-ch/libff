@@ -47,17 +47,8 @@ bigint<n>::bigint(const char* s) /// Initialize from a string containing an inte
 template<mp_size_t n>
 bigint<n>::bigint(const mpz_t r) /// Initialize from MPZ element
 {
-    mpz_t k;
-    mpz_init_set(k, r);
-
-    for (size_t i = 0; i < n; ++i)
-    {
-        data[i] = mpz_get_ui(k);
-        mpz_fdiv_q_2exp(k, k, GMP_NUMB_BITS);
-    }
-
-    assert(mpz_sgn(k) == 0);
-    mpz_clear(k);
+    assert(mpz_size(r) <= n);
+    mpz_export(data, nullptr, -1, sizeof(mp_limb_t), 0, 0, r);
 }
 
 template<mp_size_t n>
